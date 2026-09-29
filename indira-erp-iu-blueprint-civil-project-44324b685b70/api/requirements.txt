@@ -1,0 +1,8 @@
+# Vercel-safe subset — pure-Python only, no binary deps.
+# Text-layer PDFs are handled by pdfplumber. Scanned / handwritten PDFs need
+# Tesseract + poppler + Ghostscript, none of which fit on Vercel — deploy to
+# Render / Railway / Fly.io / Cloud Run for full OCR support.
+fastapi>=0.110
+python-multipart>=0.0.9
+pdfplumber>=0.11
+Pillow>=10

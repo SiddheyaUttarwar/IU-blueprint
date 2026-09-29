@@ -1,0 +1,16 @@
+{
+  "include": [
+    "api",
+    "scripts"
+  ],
+  "extraPaths": [
+    "scripts/indent_scan"
+  ],
+  "reportMissingImports": "none",
+  "reportMissingModuleSource": "none",
+  "reportPrivateImportUsage": "none",
+  "reportArgumentType": "none",
+  "reportReturnType": "none",
+  "pythonVersion": "3.11",
+  "typeCheckingMode": "basic"
+}

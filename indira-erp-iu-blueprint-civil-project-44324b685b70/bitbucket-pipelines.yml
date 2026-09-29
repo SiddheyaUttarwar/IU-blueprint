@@ -1,0 +1,52 @@
+# CI/CD pipeline for IU Civil Projects
+# develop → Vercel Preview (Dev environment)
+# main    → Vercel Production
+
+image: node:20
+
+pipelines:
+  branches:
+    develop:
+      - step:
+          name: Deploy to Dev
+          caches:
+            - node
+          script:
+            - npm install --legacy-peer-deps
+            - npm install -g vercel
+            # Install uv
+            - curl -LsSf https://astral.sh/uv/install.sh | sh
+            - export PATH="$HOME/.local/bin:$PATH"
+
+            # Install Python 3.12
+            - uv python install 3.12
+            - echo "3.12" > .python-version
+            - vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
+            - vercel build --token=$VERCEL_TOKEN
+            - vercel deploy --prebuilt --token=$VERCEL_TOKEN
+
+
+
+    main:
+      - step:
+          name: Deploy to Production
+          caches:
+            - node
+          script:
+            - npm install --legacy-peer-deps
+            - npm install -g vercel
+            # Install uv
+            - curl -LsSf https://astral.sh/uv/install.sh | sh
+            - export PATH="$HOME/.local/bin:$PATH"
+
+            # Install Python 3.12
+            - uv python install 3.12
+            - echo "3.12" > .python-version
+            - vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+            - vercel build --prod --token=$VERCEL_TOKEN
+            - vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
+
+
+definitions:
+  caches:
+    node: node_modules
